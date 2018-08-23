@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 
 
-namespace LanExtractor
+namespace LanExtractorServer
 {
     class Program
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExtractor", "LanExtracto\LanExtractor.csproj", "{ED8EFCE1-9BC9-4089-BCBA-8634E8B19446}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExtractorServer", "LanExtractorServer\LanExtractorServer.csproj", "{7E3EAD26-4BEC-472C-917C-E640304ADC6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ED8EFCE1-9BC9-4089-BCBA-8634E8B19446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED8EFCE1-9BC9-4089-BCBA-8634E8B19446}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED8EFCE1-9BC9-4089-BCBA-8634E8B19446}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED8EFCE1-9BC9-4089-BCBA-8634E8B19446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3EAD26-4BEC-472C-917C-E640304ADC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3EAD26-4BEC-472C-917C-E640304ADC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3EAD26-4BEC-472C-917C-E640304ADC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3EAD26-4BEC-472C-917C-E640304ADC6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1866DA43-3350-496F-8BBC-ED7FDB649564}
+		SolutionGuid = {254D99E8-AAC8-49C8-8484-A5F9D80C6F96}
 	EndGlobalSection
 EndGlobal

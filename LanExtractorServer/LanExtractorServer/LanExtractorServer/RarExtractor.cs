@@ -1,12 +1,11 @@
-﻿using CliWrap;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanExtractor
+namespace LanExtractorServer
 {
     class RarExtractor
     {
@@ -43,17 +42,17 @@ namespace LanExtractor
         string DirToFilename(string filedir)
         {
             string filename = "";
-            if(filedir == null || filedir.Length <= 0)
+            if (filedir == null || filedir.Length <= 0)
             {
                 return filename;
             }
             int lastIndex = filedir.LastIndexOf('/');
-            if(lastIndex == -1)
+            if (lastIndex == -1)
             {
                 return filename;
             }
 
-            if(lastIndex < filedir.Length)
+            if (lastIndex < filedir.Length)
             {
                 filename = filedir.Substring(lastIndex + 1);
             }

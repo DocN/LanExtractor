@@ -1,7 +1,0 @@
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\bin\Debug\LanExtracto.exe.config
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\bin\Debug\LanExtracto.exe
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\bin\Debug\LanExtracto.pdb
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\obj\Debug\LanExtracto.csprojAssemblyReference.cache
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\obj\Debug\LanExtracto.csproj.CoreCompileInputs.cache
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\obj\Debug\LanExtracto.exe
-C:\dev\C#\LanExtractorServer\LanExtracto\LanExtracto\obj\Debug\LanExtracto.pdb
