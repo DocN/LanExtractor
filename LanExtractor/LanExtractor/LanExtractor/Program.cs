@@ -7,6 +7,7 @@ namespace LanExtractor
 {
     class Program
     {
+        private static string SERVER_ADDRESS = "192.168.1.3";
         public static void StartClient()
         {
             // Data buffer for incoming data.  
@@ -19,7 +20,7 @@ namespace LanExtractor
                 // This example uses port 11000 on the local computer.  
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
-                ipAddress = System.Net.IPAddress.Parse("192.168.1.3");
+                ipAddress = System.Net.IPAddress.Parse(SERVER_ADDRESS);
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
 
                 // Create a TCP/IP  socket.  
@@ -49,13 +50,19 @@ namespace LanExtractor
                         //Console.WriteLine(bytesRec);
                         Console.WriteLine(Encoding.ASCII.GetString(bytes, 0, bytesRec));
                         Console.WriteLine(watch.ElapsedMilliseconds);
-                        if(bytesRec == 0)
+
+                        //if no response in 2 seconds terminate
+                        if (bytesRec == 0)
                         {
-                            if(watch.ElapsedMilliseconds >= 5000)
+                            if (watch.ElapsedMilliseconds >= 2000)
                             {
                                 watch.Stop();
                                 break;
                             }
+                        }
+                        if(bytesRec != 0)
+                        {
+                            watch.Restart();
                         }
                         if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("Done"))
                         {
