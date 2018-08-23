@@ -45,8 +45,10 @@ namespace LanExtractorServer
                     // An incoming connection needs to be processed.  
                     while (true)
                     {
+                        System.Threading.Thread.Sleep(500);
                         int bytesRec = handler.Receive(bytes);
-                        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                        string fileDIR = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                        ExtractFile(fileDIR, handler);
                         data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
                         if (data.IndexOf("<EOF>") > -1)
                         {
@@ -58,7 +60,7 @@ namespace LanExtractorServer
                     Console.WriteLine("Text received : {0}", data);
 
                     // Echo the data back to the client.  
-                    byte[] msg = Encoding.ASCII.GetBytes(data);
+                    byte[] msg = Encoding.ASCII.GetBytes("Done");
 
                     handler.Send(msg);
                     handler.Shutdown(SocketShutdown.Both);
@@ -76,11 +78,17 @@ namespace LanExtractorServer
 
         }
 
+        public static void ExtractFile(string fileDIR, Socket handler)
+        {
+            RarExtractor extractor = new RarExtractor(handler);
+        }
+
         public static int Main(String[] args)
         {
-            var extractor = new RarExtractor();
-            Console.ReadLine();
-            //StartListening();
+            //var extractor = new RarExtractor();
+            
+            StartListening();
+            //Console.ReadLine();
             return 0;
         }
     }

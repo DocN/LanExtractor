@@ -39,11 +39,17 @@ namespace LanExtractor
                     // Send the data through the socket.  
                     int bytesSent = sender.Send(msg);
 
-                    // Receive the response from the remote device.  
-                    int bytesRec = sender.Receive(bytes);
-                    Console.WriteLine("Echoed test = {0}",
-                        Encoding.ASCII.GetString(bytes, 0, bytesRec));
-                    Console.ReadLine();
+                    while(true)
+                    {
+                        // Receive the response from the remote device.  
+                        int bytesRec = sender.Receive(bytes);
+                        Console.WriteLine(Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                        if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("Done"))
+                        {
+                            break;
+                        }
+                    }
+
                     // Release the socket.  
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
@@ -71,7 +77,20 @@ namespace LanExtractor
 
         public static int Main(String[] args)
         {
-            StartClient();
+            while(true)
+            {
+                StartClient();
+                char key = Console.ReadKey().KeyChar;
+                if(key == 'y')
+                {
+
+                }
+                else
+                {
+                    break;
+                }
+            }
+            
             return 0;
         }
     }

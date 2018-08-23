@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,19 @@ namespace LanExtractorServer
     {
         private string fileDir = "";
         private string directoryName = "";
+        private Socket handler;
         public RarExtractor()
         {
+            this.directoryName = "1";
+            this.fileDir = "C:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
+            this.SwapSlash();
+            this.directoryName = DirToFilename(this.fileDir);
+            this.ExtractFile();
+        }
+
+        public RarExtractor(Socket handler)
+        {
+            this.handler = handler;
             this.directoryName = "1";
             this.fileDir = "C:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
             this.SwapSlash();
@@ -25,13 +37,24 @@ namespace LanExtractorServer
             string strCmdText = "unrar x";
             strCmdText = strCmdText + " " + this.fileDir + " " + this.directoryName;
             //System.Diagnostics.Process.Start("CMD.exe", strCmdText);
-            strCmdText = "unrar x Z:/Family.Guy.S14E14.720p.HDTV.x264-FLEET/family.guy.s14e14.720p.hdtv.x264-fleet.r00 Z:/Family.Guy.S14E14.720p.HDTV.x264-FLEET";
+            strCmdText = "unrar x C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET/family.guy.s14e14.720p.hdtv.x264-fleet.r00 C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET -o+";
             Console.WriteLine(strCmdText);
             var processStartInfo = new ProcessStartInfo();
-            processStartInfo.WorkingDirectory = @"C:\Program Files\WinRAR";
             processStartInfo.FileName = "cmd.exe";
             processStartInfo.Arguments = "/C " + strCmdText;
+            processStartInfo.RedirectStandardOutput = true;
+            processStartInfo.UseShellExecute = false;
+            processStartInfo.CreateNoWindow = true;
             Process proc = Process.Start(processStartInfo);
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                Console.WriteLine(line);
+                byte[] msg = Encoding.ASCII.GetBytes(line);
+
+                handler.Send(msg);
+                // do something with line
+            }
         }
 
         void SwapSlash()
