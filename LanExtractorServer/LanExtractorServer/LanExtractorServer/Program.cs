@@ -21,6 +21,7 @@ namespace LanExtractorServer
             // host running the application.  
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
+            ipAddress = System.Net.IPAddress.Parse("192.168.1.3");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
 
             // Create a TCP/IP socket.  
@@ -45,7 +46,6 @@ namespace LanExtractorServer
                     // An incoming connection needs to be processed.  
                     while (true)
                     {
-                        System.Threading.Thread.Sleep(500);
                         int bytesRec = handler.Receive(bytes);
                         string fileDIR = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                         ExtractFile(fileDIR, handler);
@@ -80,7 +80,7 @@ namespace LanExtractorServer
 
         public static void ExtractFile(string fileDIR, Socket handler)
         {
-            RarExtractor extractor = new RarExtractor(handler);
+            RarExtractor extractor = new RarExtractor("", handler);
         }
 
         public static int Main(String[] args)

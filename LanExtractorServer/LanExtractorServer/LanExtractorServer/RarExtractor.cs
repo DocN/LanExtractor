@@ -11,33 +11,29 @@ namespace LanExtractorServer
     class RarExtractor
     {
         private string fileDir = "";
-        private string directoryName = "";
+        private string filePath = "";
         private Socket handler;
-        public RarExtractor()
-        {
-            this.directoryName = "1";
-            this.fileDir = "C:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
-            this.SwapSlash();
-            this.directoryName = DirToFilename(this.fileDir);
-            this.ExtractFile();
-        }
+        private string filename = "";
 
-        public RarExtractor(Socket handler)
+        public RarExtractor(String fileDIR, Socket handler)
         {
             this.handler = handler;
-            this.directoryName = "1";
-            this.fileDir = "C:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
+            this.fileDir = fileDIR;
+            this.fileDir = "D:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
             this.SwapSlash();
-            this.directoryName = DirToFilename(this.fileDir);
+            this.DirToFilename(this.fileDir);
+            this.getDirectory();
             this.ExtractFile();
+
         }
 
         void ExtractFile()
         {
+            this.makeFolder();
             string strCmdText = "unrar x";
-            strCmdText = strCmdText + " " + this.fileDir + " " + this.directoryName;
-            //System.Diagnostics.Process.Start("CMD.exe", strCmdText);
-            strCmdText = "unrar x C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET/family.guy.s14e14.720p.hdtv.x264-fleet.r00 C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET -o+";
+
+            //strCmdText = "unrar x C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET/family.guy.s14e14.720p.hdtv.x264-fleet.r00 C:/Family.Guy.S14E14.720p.HDTV.x264-FLEET -o+";
+            strCmdText = "unrar x " + this.fileDir + " "  + this.filePath + "/" + this.filename + " -o+";
             Console.WriteLine(strCmdText);
             var processStartInfo = new ProcessStartInfo();
             processStartInfo.FileName = "cmd.exe";
@@ -57,29 +53,61 @@ namespace LanExtractorServer
             }
         }
 
+        void makeFolder()
+        {
+            
+            var processStartInfo = new ProcessStartInfo();
+            string strCmdText = "mkdir " + this.filePath + "/" + this.filename;
+            strCmdText = this.SwapSlashString(strCmdText);
+            Console.WriteLine(strCmdText);
+            processStartInfo.FileName = "cmd.exe";
+            processStartInfo.Arguments = "/C " + strCmdText;
+            processStartInfo.RedirectStandardOutput = true;
+            processStartInfo.UseShellExecute = false;
+            processStartInfo.CreateNoWindow = true;
+            Process proc = Process.Start(processStartInfo);
+        }
         void SwapSlash()
         {
             this.fileDir = this.fileDir.Replace('\\', '/');
         }
 
-        string DirToFilename(string filedir)
+        string SwapSlashString(string directory)
+        {
+            directory = directory.Replace('/', '\\');
+            return directory;
+        }
+
+        void getDirectory()
+        {
+            int indexOfLastSlash = this.fileDir.LastIndexOf('/');
+            if(indexOfLastSlash == -1)
+            {
+                this.filePath = "blank";
+            }
+            this.filePath = this.fileDir.Substring(0, indexOfLastSlash);
+        }
+
+        void DirToFilename(string filedir)
         {
             string filename = "";
             if (filedir == null || filedir.Length <= 0)
             {
-                return filename;
+                this.filename = filename;
             }
             int lastIndex = filedir.LastIndexOf('/');
+
             if (lastIndex == -1)
             {
-                return filename;
+                this.filename = filename;
             }
 
             if (lastIndex < filedir.Length)
             {
                 filename = filedir.Substring(lastIndex + 1);
             }
-            return filename;
+            int extIndex = filename.LastIndexOf('.');
+            this.filename = filename.Substring(0, extIndex);
         }
 
         void replaceDriveLetter(string filedir)

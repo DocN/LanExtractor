@@ -19,6 +19,7 @@ namespace LanExtractor
                 // This example uses port 11000 on the local computer.  
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
+                ipAddress = System.Net.IPAddress.Parse("192.168.1.3");
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
 
                 // Create a TCP/IP  socket.  
@@ -38,14 +39,27 @@ namespace LanExtractor
 
                     // Send the data through the socket.  
                     int bytesSent = sender.Send(msg);
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
 
-                    while(true)
+                    while (true)
                     {
+                        //System.Threading.Thread.Sleep(500);
                         // Receive the response from the remote device.  
                         int bytesRec = sender.Receive(bytes);
+                        //Console.WriteLine(bytesRec);
                         Console.WriteLine(Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                        Console.WriteLine(watch.ElapsedMilliseconds);
+                        if(bytesRec == 0)
+                        {
+                            if(watch.ElapsedMilliseconds >= 5000)
+                            {
+                                watch.Stop();
+                                break;
+                            }
+                        }
                         if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("Done"))
                         {
+                            Console.WriteLine("here");
                             break;
                         }
                     }
@@ -80,12 +94,9 @@ namespace LanExtractor
             while(true)
             {
                 StartClient();
+                Console.WriteLine("waiting for y");
                 char key = Console.ReadKey().KeyChar;
-                if(key == 'y')
-                {
-
-                }
-                else
+                if(key != 'y')
                 {
                     break;
                 }
