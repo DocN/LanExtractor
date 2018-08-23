@@ -1,0 +1,7 @@
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\bin\Debug\LanExtractor.exe.config
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\bin\Debug\LanExtractor.exe
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\bin\Debug\LanExtractor.pdb
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\obj\Debug\LanExtractor.csprojAssemblyReference.cache
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\obj\Debug\LanExtractor.csproj.CoreCompileInputs.cache
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\obj\Debug\LanExtractor.exe
+C:\dev\C#\LanExtractor\LanExtractor\LanExtractor\obj\Debug\LanExtractor.pdb
