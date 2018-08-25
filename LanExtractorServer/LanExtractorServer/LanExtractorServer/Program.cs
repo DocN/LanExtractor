@@ -48,6 +48,7 @@ namespace LanExtractorServer
                     {
                         int bytesRec = handler.Receive(bytes);
                         string fileDIR = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                        Console.WriteLine(fileDIR);
                         ExtractFile(fileDIR, handler);
                         data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
                         if (data.IndexOf("<EOF>") > -1)
@@ -73,22 +74,22 @@ namespace LanExtractorServer
                 Console.WriteLine(e.ToString());
             }
 
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
+            //Console.WriteLine("\nPress ENTER to continue...");
+            //Console.Read();
 
         }
 
         public static void ExtractFile(string fileDIR, Socket handler)
         {
-            RarExtractor extractor = new RarExtractor("", handler);
+            RarExtractor extractor = new RarExtractor(fileDIR, handler);
         }
 
         public static int Main(String[] args)
         {
-            //var extractor = new RarExtractor();
-            
-            StartListening();
-            //Console.ReadLine();
+            while(true)
+            {
+                StartListening();
+            }
             return 0;
         }
     }

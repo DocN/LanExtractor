@@ -10,16 +10,20 @@ namespace LanExtractorServer
 {
     class RarExtractor
     {
+        private static string SHARE_DIR = "D";
         private string fileDir = "";
         private string filePath = "";
         private Socket handler;
         private string filename = "";
 
+        
+
         public RarExtractor(String fileDIR, Socket handler)
         {
             this.handler = handler;
             this.fileDir = fileDIR;
-            this.fileDir = "D:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
+            //this.fileDir = "D:\\Family.Guy.S14E14.720p.HDTV.x264-FLEET\\family.guy.s14e14.720p.hdtv.x264-fleet.r00";
+            this.ReplaceDriveLetter();
             this.SwapSlash();
             this.DirToFilename(this.fileDir);
             this.getDirectory();
@@ -110,9 +114,12 @@ namespace LanExtractorServer
             this.filename = filename.Substring(0, extIndex);
         }
 
-        void replaceDriveLetter(string filedir)
+        void ReplaceDriveLetter()
         {
-
+            if(this.fileDir != null && this.fileDir.Length >= 0)
+            {
+                this.fileDir = SHARE_DIR + this.fileDir.Substring(1);
+            }
         }
     }
 }

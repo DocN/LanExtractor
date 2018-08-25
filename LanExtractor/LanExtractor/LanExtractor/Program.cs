@@ -8,6 +8,7 @@ namespace LanExtractor
     class Program
     {
         private static string SERVER_ADDRESS = "192.168.1.3";
+        private static string filedir = "";
         public static void StartClient()
         {
             // Data buffer for incoming data.  
@@ -36,7 +37,7 @@ namespace LanExtractor
                         sender.RemoteEndPoint.ToString());
 
                     // Encode the data string into a byte array.  
-                    byte[] msg = Encoding.ASCII.GetBytes("This is a meme<EOF>");
+                    byte[] msg = Encoding.ASCII.GetBytes(filedir);
 
                     // Send the data through the socket.  
                     int bytesSent = sender.Send(msg);
@@ -64,9 +65,8 @@ namespace LanExtractor
                         {
                             watch.Restart();
                         }
-                        if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("Done"))
+                        if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("All OK"))
                         {
-                            Console.WriteLine("here");
                             break;
                         }
                     }
@@ -98,17 +98,20 @@ namespace LanExtractor
 
         public static int Main(String[] args)
         {
-            while(true)
+            //C:\Users\DrN\AppData\Roaming\Microsoft\Windows\SendTo
+            if(args.Length <= 0)
             {
-                StartClient();
-                Console.WriteLine("waiting for y");
-                char key = Console.ReadKey().KeyChar;
-                if(key != 'y')
-                {
-                    break;
-                }
+                Console.WriteLine("No File");
+                System.Threading.Thread.Sleep(1000);
+                return 0;
             }
+
+            Console.WriteLine(args[0]);
+            filedir = args[0];
             
+            StartClient();
+            Console.WriteLine("Extraction complete, press any key to close");
+            Console.ReadLine();
             return 0;
         }
     }
