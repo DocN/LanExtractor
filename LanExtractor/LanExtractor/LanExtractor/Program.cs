@@ -65,7 +65,7 @@ namespace LanExtractor
                         {
                             watch.Restart();
                         }
-                        if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Equals("All OK"))
+                        if (Encoding.ASCII.GetString(bytes, 0, bytesRec).Contains("OK"))
                         {
                             break;
                         }
